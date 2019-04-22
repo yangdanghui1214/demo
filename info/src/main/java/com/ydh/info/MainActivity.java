@@ -1,13 +1,12 @@
 package com.ydh.info;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
+import android.support.v7.app.AppCompatActivity;
 
+import com.ydh.info.camera.CameraInfoAty;
 import com.ydh.info.databinding.ActivityMainBinding;
-
-import static com.ydh.info.util.Util.getResolutionRatio;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,9 +15,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= DataBindingUtil.setContentView(this,R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        binding.textView.setText(getResolutionRatio(this));
+        binding.button.setOnClickListener(view -> {
+            startActivity(new Intent(this, SpeakAty.class));
+        });
+        binding.button2.setOnClickListener(view -> {
+            startActivity(new Intent(this, CameraInfoAty.class));
+        });
 
     }
 }
