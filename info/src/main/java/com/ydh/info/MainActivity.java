@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import com.ydh.info.camera.CameraInfoAty;
 import com.ydh.info.databinding.ActivityMainBinding;
 
+import static com.ydh.info.util.Util.getMac;
+import static com.ydh.info.util.Util.getResolutionRatio;
+
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
@@ -23,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
         binding.button2.setOnClickListener(view -> {
             startActivity(new Intent(this, CameraInfoAty.class));
         });
+
+        String string = getResolutionRatio(this) + "\nMac: " + getMac(this);
+        binding.textView.setText(string);
 
     }
 }
