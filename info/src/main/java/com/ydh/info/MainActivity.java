@@ -11,6 +11,10 @@ import com.ydh.info.databinding.ActivityMainBinding;
 import static com.ydh.info.util.Util.getMac;
 import static com.ydh.info.util.Util.getResolutionRatio;
 
+/**
+ * 主界面
+ * @author 13001
+ */
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;

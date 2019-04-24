@@ -1,5 +1,6 @@
 package com.ydh.info.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -31,6 +32,7 @@ public class Util {
      * @param mCxt 上下文
      * @return 设备的Mac地址
      */
+    @SuppressLint("HardwareIds")
     public static String getMac(Context mCxt) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             try {
@@ -66,8 +68,9 @@ public class Util {
             return "02:00:00:00:00:00";
         } else {
             String macAddress = null;
-            WifiManager wifiManager = (WifiManager)mCxt.getSystemService(Context.WIFI_SERVICE);
+            WifiManager wifiManager = (WifiManager)mCxt.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             WifiInfo info = null == wifiManager ? null : wifiManager.getConnectionInfo();
+            assert wifiManager != null;
             if (!wifiManager.isWifiEnabled()) {
                 wifiManager.setWifiEnabled(true);
                 wifiManager.setWifiEnabled(false);
