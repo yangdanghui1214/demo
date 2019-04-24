@@ -1,9 +1,11 @@
 package com.ydh.network.okHttp;
 
 import com.ydh.network.call.ICallback;
+import com.ydh.network.common.NetworkCommon;
 import com.ydh.network.processor.IHttpProcessor;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -26,9 +28,13 @@ public class OkHttpProcessor implements IHttpProcessor {
 
     static OkHttpClient client;
 
-    private OkHttpProcessor(){
+    private OkHttpProcessor() {
         if (client == null) {
-            client = new OkHttpClient();
+            client = new OkHttpClient().newBuilder()
+                    .connectTimeout(NetworkCommon.connectTimeout, TimeUnit.MILLISECONDS)
+                    .writeTimeout(NetworkCommon.writeTimeOut, TimeUnit.MILLISECONDS)
+                    .readTimeout(NetworkCommon.readTimeOut, TimeUnit.MILLISECONDS)
+                    .build();
         }
     }
 
@@ -37,14 +43,14 @@ public class OkHttpProcessor implements IHttpProcessor {
     }
 
     @Override
-    public void post(String url, Map<String, Object> params, final ICallback callbask) {
+    public void post(String url, HashMap<String, String> params, final ICallback callbask) {
 
-        RequestBody body=appendBody(params);
+        RequestBody body = appendBody(params);
 
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
-                .header("User-Agent","a")
+                .header("User-Agent", "a")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -66,16 +72,17 @@ public class OkHttpProcessor implements IHttpProcessor {
     }
 
     @Override
-    public void get(String url, Map<String, Object> params, ICallback callnack) {
+    public void get(String url, HashMap<String, String> params, ICallback callnack) {
 
     }
 
     /**
      * 拼接请求参数
+     *
      * @param map
      * @return
      */
-    private RequestBody appendBody(Map<String, Object> map) {
+    private RequestBody appendBody(Map<String, String> map) {
 
         FormBody.Builder body = new FormBody.Builder();
 
@@ -83,8 +90,8 @@ public class OkHttpProcessor implements IHttpProcessor {
             return body.build();
         }
 
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            body.add(entry.getKey(),entry.getValue().toString());
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            body.add(entry.getKey(), entry.getValue() );
         }
 
         return body.build();

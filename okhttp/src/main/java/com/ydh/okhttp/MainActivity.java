@@ -1,26 +1,17 @@
 package com.ydh.okhttp;
 
-import android.hardware.Camera;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.util.Size;
 import android.view.View;
 
 import com.ydh.network.HttpHelper;
 import com.ydh.network.call.HttpCallback;
 import com.ydh.okhttp.bean.BeanPhoto;
+import com.ydh.okhttp.bean.DeviceLoginModel;
 import com.ydh.okhttp.util.TimeUtil;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import java.util.HashMap;
 
 /**
  * @author 13001
@@ -58,26 +49,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//
-//                Camera mCamera = Camera.open();
-//                Camera.Parameters params = mCamera.getParameters();
-//
-//                List<Camera.Size> pictureSizes = params.getSupportedPictureSizes();
-//                int length = pictureSizes.size();
-//                for (int i = 0; i < length; i++) {
-//                    Log.e("SupportedPictureSizes", "SupportedPictureSizes : " + pictureSizes.get(i).width + "x" + pictureSizes.get(i).height);
-//                }
-//
-//                List<Camera.Size> previewSizes = params.getSupportedPreviewSizes();
-//                length = previewSizes.size();
-//                for (int i = 0; i < length; i++) {
-//                    Log.e("SupportedPreviewSizes", "SupportedPreviewSizes : " + previewSizes.get(i).width + "x" + previewSizes.get(i).height);
-//                }
-//            }
-//        }).start();
+        // 使用retrofit 请求
+        findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HashMap map = new HashMap();
+                map.put("deviceMac", "BO:F1:EC:32:95:9A");
+
+                HttpHelper.obtain().post("user/login", map, new HttpCallback<DeviceLoginModel>() {
+                    @Override
+                    public void onFailure(String e) {
+                        Log.e("zxy", "onFailure: " + e);
+                    }
+
+                    @Override
+                    public void onSuccess(DeviceLoginModel beanPhoto) {
+                        Log.e("zxy", "onSuccess: " + beanPhoto.toString());
+                    }
+                });
+            }
+        });
 
     }
 

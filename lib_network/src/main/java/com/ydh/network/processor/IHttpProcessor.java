@@ -2,6 +2,7 @@ package com.ydh.network.processor;
 
 import com.ydh.network.call.ICallback;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Map;
  */
 public interface IHttpProcessor {
 
-    void post(String url, Map<String,Object> params, ICallback callbask);
-    void get(String url , Map<String,Object> params, ICallback callnack);
+    void post(String url, HashMap<String,String> params, ICallback callbask);
+    void get(String url , HashMap<String,String> params, ICallback callnack);
 
 }

@@ -34,9 +34,8 @@ public class CameraInfoAty extends AppCompatActivity {
 
         int check = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         if (check != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this
-                    , new String[]{Manifest.permission.CAMERA}
-                    , 1);
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA}, 1);
         } else {
             cameraInfo();
         }
@@ -50,7 +49,8 @@ public class CameraInfoAty extends AppCompatActivity {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 cameraInfo();
             } else {
-                Toast.makeText(this, "没有拨打电话权限", Toast.LENGTH_SHORT).show();
+                binding.tvInfo.setText("没有权限");
+                Toast.makeText(this, "没有访问相机的权限", Toast.LENGTH_SHORT).show();
             }
         }
     }

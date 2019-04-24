@@ -1,9 +1,11 @@
-package com.ydh.lib_retrofit3.retrofit.subscriber;
+package com.ydh.network.retrofit.subscriber;
 
-import com.ydh.lib_retrofit3.exception.AiException;
-import com.ydh.lib_retrofit3.exception.AiThrowable;
-import com.ydh.lib_retrofit3.util.HttpLog;
+import android.util.Log;
 
+import com.ydh.network.exception.AiException;
+import com.ydh.network.exception.AiThrowable;
+
+import io.reactivex.Observer;
 import io.reactivex.observers.ResourceObserver;
 
 
@@ -16,24 +18,24 @@ public abstract class BaseObserver<T> extends ResourceObserver<T> {
     @Override
     public void onError(Throwable e) {
         if (e != null && e.getMessage() != null) {
-            HttpLog.v("Ai" + e.getMessage());
+          Log.v("onError","Ai" + e.getMessage());
 
         } else {
-            HttpLog.v("Ai" + "AiThrowable  || Message == Null");
+           Log.v("onError","Ai" + "AiThrowable  || Message == Null");
         }
 
         try {
             if (e instanceof AiThrowable) {
-                HttpLog.e("Ai" + "--> e instanceof AiThrowable");
-                HttpLog.e("Ai" + "--> " + e.getCause().toString());
+                Log.e("onError","Ai" + "--> e instanceof AiThrowable");
+                 Log.e("onError","Ai" + "--> " + e.getCause().toString());
                 onError((AiThrowable) e);
             } else {
-                HttpLog.e("Ai" + "e !instanceof AiThrowable");
+                 Log.e("onError","Ai" + "e !instanceof AiThrowable");
                 String detail = "";
                 if (e != null && e.getCause() != null) {
                     detail = e.getCause().getMessage();
                 }
-                HttpLog.e("Ai" + "--> " + detail);
+                Log.e("onError","Ai" + "--> " + detail);
                 onError(AiException.handleException(e));
             }
         } catch (Exception e1) {

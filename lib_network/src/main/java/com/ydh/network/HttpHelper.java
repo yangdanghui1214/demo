@@ -6,6 +6,9 @@ import com.ydh.network.processor.IHttpProcessor;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.Interceptor;
+import okhttp3.internal.Internal;
+
 /**
  * @author 13001
  */
@@ -38,12 +41,12 @@ public class HttpHelper implements IHttpProcessor {
     }
 
     @Override
-    public void post(String url, Map<String, Object> params, ICallback callbask) {
+    public void post(String url, HashMap<String, String> params, ICallback callbask) {
         httpProcessor.post(url, params, callbask);
     }
 
     @Override
-    public void get(String url, Map<String, Object> params, ICallback callnack) {
+    public void get(String url, HashMap<String, String> params, ICallback callnack) {
         httpProcessor.get(url, params, callnack);
     }
 }
