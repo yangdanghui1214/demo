@@ -6,23 +6,33 @@ import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.ydh.animation.databinding.ActivityMainBinding;
+import com.ydh.animation.databinding.ActivitySvgBinding;
+import com.ydh.animation.svg.SvgActivity;
+
 /**
- *
  * @author 13001
  */
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "SimpleAnimationActivity";
 
+    ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        // 跳转SVG 界面
+        binding.button.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SvgActivity.class)));
 
         ZincView view = new ZincView(this);
         ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, "zinc", 0f, 2f, 5f);
@@ -76,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         public ZincView(Context context) {
             super(context);
         }
+
         public void setZinc(float value) {
             Log.i(TAG, "setZinc: " + value);
         }
