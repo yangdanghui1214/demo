@@ -1,1 +1,1 @@
-include ':okhttp', ':lib_retrofit', ':eventbus',  ':lib_aop', ':aop', ':info', ':lib_retrofit2', ':network', ':live_data', ':lib_retrofit3', ':lib_network', ':recycler', ':animation'
+include ':okhttp', ':lib_retrofit', ':eventbus',  ':lib_aop', ':aop', ':info', ':lib_retrofit2', ':network', ':live_data', ':lib_retrofit3', ':lib_network', ':recycler', ':animation', ':custom'

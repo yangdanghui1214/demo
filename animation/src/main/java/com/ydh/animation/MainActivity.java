@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.ydh.animation.databinding.ActivityMainBinding;
 import com.ydh.animation.databinding.ActivitySvgBinding;
+import com.ydh.animation.mail.MailActivity;
 import com.ydh.animation.property.PropertyRotateRvActivity;
 import com.ydh.animation.svg.SvgActivity;
 
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         binding.button.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SvgActivity.class)));
 
         binding.button1.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, PropertyRotateRvActivity.class)));
+        // 信封动效
+        binding.button2.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MailActivity.class)));
 
 
 
