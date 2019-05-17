@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">component</string>
+    <string name="handler">Handler 使用</string>
 </resources>

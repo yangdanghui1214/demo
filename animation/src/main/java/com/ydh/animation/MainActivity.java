@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 跳转SVG 界面
         binding.button.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, SvgActivity.class)));
-
+        // 旋转动效（IOS 应用市场
         binding.button1.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, PropertyRotateRvActivity.class)));
         // 信封动效
         binding.button2.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MailActivity.class)));

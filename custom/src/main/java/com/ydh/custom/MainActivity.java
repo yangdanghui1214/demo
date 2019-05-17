@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.ydh.custom.databinding.ActivityMainBinding;
+import com.ydh.custom.editor.FillActivity;
 import com.ydh.custom.keyboard.KeyboardActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,5 +20,8 @@ public class MainActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         binding.button.setOnClickListener(view -> startActivity(new Intent(this, KeyboardActivity.class)));
+
+        binding.button1.setOnClickListener(view -> startActivity(new Intent(this, FillActivity.class)));
+
     }
 }

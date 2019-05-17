@@ -13,7 +13,7 @@ import com.ydh.custom.databinding.ActivityKeyboardBinding;
  * 软键盘UI
  * @author 13001
  */
-public class KeyboardActivity extends AppCompatActivity implements KeyboardViewKt.KeyboardListener {
+public class KeyboardActivity extends AppCompatActivity implements KeyboardViewKt.KeyboardListener, KeyboardRoundViewKt.KeyboardListener {
 
     ActivityKeyboardBinding binding;
 
@@ -22,7 +22,9 @@ public class KeyboardActivity extends AppCompatActivity implements KeyboardViewK
         super.onCreate(savedInstanceState);
         binding= DataBindingUtil.setContentView(this,R.layout.activity_keyboard);
 
-        binding.key.initView("呼叫",this);
+//        binding.key.initView("呼叫",this);
+
+        binding.keyRound.initView(this);
 
     }
 
@@ -59,5 +61,10 @@ public class KeyboardActivity extends AppCompatActivity implements KeyboardViewK
         }else {
             binding.editText.setText(content.substring(0,content.length()-1));
         }
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }
