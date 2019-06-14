@@ -37,4 +37,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     //    implementation 'com.squareup.okhttp3:okhttp:3.13.1'
     implementation project(':lib_network')
+    implementation files('libs\\ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')
 }

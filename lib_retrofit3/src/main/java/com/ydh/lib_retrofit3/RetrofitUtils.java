@@ -23,7 +23,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-@SuppressWarnings(value={"unchecked", "deprecation"})
+@SuppressWarnings(value = {"unchecked", "deprecation"})
 public class RetrofitUtils {
 
     private static RetrofitUtils instance;
@@ -140,7 +140,7 @@ public class RetrofitUtils {
     }
 
 
-    public <T> Observable<T>  post(String url, HashMap<String, String> map, Class<T> deviceLoginModelClass) {
+    public <T> Observable<T> post(String url, HashMap<String, String> map, Class<T> deviceLoginModelClass) {
         return baseApi.post(url, map)
                 .map(new ApiResultFunc(new CallBackProxy<BasicResponse<T>, T>(deviceLoginModelClass) {
                 }.getType()))

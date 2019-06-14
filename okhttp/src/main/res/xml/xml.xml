@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap12:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soap12:Body>
+        <GetAvailableRoomFeatures xmlns="http://tempuri.org/">
+            <interface>
+                <item>
+                    <ArrivalDate>$startTime</ArrivalDate>
+                    <DepartureDate>$endTime</DepartureDate>
+                    <RoomType></RoomType>
+                    <RoomNumber></RoomNumber>
+                    <RoomStates>R</RoomStates>
+                </item>
+            </interface>
+        </GetAvailableRoomFeatures>
+    </soap12:Body>
+</soap12:Envelope>

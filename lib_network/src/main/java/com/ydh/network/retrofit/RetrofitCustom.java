@@ -1,5 +1,7 @@
 package com.ydh.network.retrofit;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ydh.network.call.ICallback;
@@ -129,9 +131,10 @@ public class RetrofitCustom implements IHttpProcessor {
     @Override
     public void post(String url, HashMap<String, String> params, ICallback callbask) {
         Observable<ResponseBody> observable = params == null ? baseApi.post(url) : baseApi.post(url, params);
-        observable.subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        observable
+//                .subscribeOn(Schedulers.io())
+//                .unsubscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<ResponseBody>() {
 
                     @Override

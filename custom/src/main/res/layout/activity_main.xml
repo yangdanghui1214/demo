@@ -28,5 +28,65 @@
             android:text="填空题输入"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="流式布局（仿通讯"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button1" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="loading 显示"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@null"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:lines="3"
+            android:maxLines="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button2"
+            tools:text="一、考务有关规定\n
+　　1. 考生应按照准考证上规定的具体时间，在考试开始前30分钟抵达考场。\n
+　　2.考生须持报考须知中规定的有效证件、准考证、铅笔、签字笔、橡皮参加考试；允许考生携带一瓶透明的塑料瓶装白水；禁止携带和使用涂改液和涂改带；禁止携带手机等任何电子器件，如发现按为违规处理。\n
+　　3.考试开始前及考试期间将对每个考生的证件进行核验。考场桌面上禁止摆放除铅笔、签字笔、橡皮、准考证、证件和塑料瓶装白水之外的任何物品(纸张、印刷品、食品饮料等)。\n
+二、考试有关要求\n
+　　1.统一开考信号后才能开始答题。\n
+　　2.考试在正式开考后15分钟，迟到考生禁止进入考场。\n
+　　3.考生必须在得到监考教师同意后方可离开考场。\n
+　　4.考生必须严格按要求答题。所有答案用HB型铅笔填写。考生只能在指定位置书写或填涂信息点。不按规定要求填涂和做答的，其答题卡一律无效。\n
+　　5.考生遇试卷分发错误或试题字迹不清等情况应及时向监考人员报告，未报告者由本人承担一切后果。涉及试题内容的疑问，不得向监考人员询问。\n
+　　6.考生在考场内必须严格遵守考场纪律，对于违反考场规定、不服从监考人员管理和舞弊者，按违反考场规定处理，情节严重的将取消其本次考试资格。\n
+　　7.根据监考教师“停止答题”的指令，考生要立即停止答题，将试卷、答题卡翻放在桌上，并坐在自己的座位上待监考人员允许后方可离开考场。\n
+　　8.任何考生不准携带试卷、答题卡、任何纸张离开考场。离开考场后不准在考场附近逗留和交谈。\n
+三、违纪情况处理\n
+　　出现下列情况之一的考生，将被拒绝入场，并不退还考费或改期安排考试。\n
+　　(1)抵达考点与网上报名所选考点不一致；\n
+　　(2)未携带准考证或报考规定的有效证件；\n
+　　(3)所持证件不符合报考规定的有关要求；\n
+　　(4)所持证件的有效性未通过核验；\n
+　　(5)所持证件与准考证上显示的信息不一致；\n
+　　(6)准考证上的照片、有效证件上的照片与本人明显不符；\n
+　　(7)考试开始后才到达考场；\n
+　　(8)不服从监考人员的管理，扰乱考场秩序。\n
+四、答题数据异常情况的处理" />
     </android.support.constraint.ConstraintLayout>
 </layout>

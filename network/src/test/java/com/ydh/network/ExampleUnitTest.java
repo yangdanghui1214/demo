@@ -22,9 +22,18 @@ public class ExampleUnitTest {
 //        boolean status = PingUtil.ping("http://checkout.tsignsv.cn/aiKindergartenTerminal/");
 //        System.out.println("ping : " + (status ? "成功" : "失败"));
 
-      PingUtil.ping02("https://checkout.tsignsv.cn/aiKindergartenTerminal/");
+        PingUtil.ping02("https://checkout.tsignsv.cn/aiKindergartenTerminal/");
 
 
+    }
+
+    class Type {
+
+        /**
+         * 房型ID
+         */
+        @JsonFieldName("Id")
+        private String id;
     }
 
 }

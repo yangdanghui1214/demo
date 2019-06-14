@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".editor.FillActivity"></activity>
+        <activity android:name=".loading.LoadActivity"></activity>
+        <activity android:name=".channel.ChannelActivity" />
+        <activity android:name=".editor.FillActivity" />
         <activity android:name=".keyboard.KeyboardActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

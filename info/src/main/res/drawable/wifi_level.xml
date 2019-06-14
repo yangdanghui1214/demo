@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<level-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:drawable="@drawable/wifi_01"
+        android:maxLevel="1"
+        android:minLevel="1" />
+    <item
+        android:drawable="@drawable/wifi_02"
+        android:maxLevel="2"
+        android:minLevel="2" />
+    <item
+        android:drawable="@drawable/wifi_03"
+        android:maxLevel="3"
+        android:minLevel="3" />
+    <item
+        android:drawable="@drawable/wifi"
+        android:maxLevel="4"
+        android:minLevel="4" />
+    <item
+        android:drawable="@drawable/wifi"
+        android:maxLevel="5"
+        android:minLevel="5" />
+    <item
+        android:drawable="@drawable/wifi_no"
+        android:maxLevel="0"
+        android:minLevel="0" />
+    <item
+        android:drawable="@drawable/wifi_dis"
+        android:maxLevel="10"
+        android:minLevel="10" />
+    <!--以下使用方法纯属脑洞，希望有用-->
+    <item
+        android:drawable="@drawable/no_net"
+        android:maxLevel="100"
+        android:minLevel="100" />
+    <item
+        android:drawable="@drawable/g2"
+        android:maxLevel="102"
+        android:minLevel="102" />
+    <item
+        android:drawable="@drawable/g3"
+        android:maxLevel="103"
+        android:minLevel="103" />
+    <item
+        android:drawable="@drawable/g4"
+        android:maxLevel="104"
+        android:minLevel="104" />
+    <item
+        android:drawable="@drawable/ethernet_on"
+        android:maxLevel="105"
+        android:minLevel="105" />
+</level-list>

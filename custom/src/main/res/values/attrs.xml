@@ -7,4 +7,11 @@
         <attr name="fillColor" format="color"/>
         <attr name="rowSpace" format="float"/>
     </declare-styleable>
+
+    <!--loading -->
+    <declare-styleable name="monindicator">
+        <attr name="circleRadius" format="dimension" />
+        <attr name="circleSpacing" format="dimension" />
+        <attr name="cycle" format="integer" />
+    </declare-styleable>
 </resources>
