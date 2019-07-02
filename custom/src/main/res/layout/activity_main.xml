@@ -49,6 +49,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button2" />
 
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Spiner 列表"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button3" />
+
         <EditText
             android:id="@+id/editText2"
             android:layout_width="match_parent"
@@ -63,7 +73,7 @@
             android:maxLines="3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button2"
+            app:layout_constraintTop_toBottomOf="@+id/button4"
             tools:text="一、考务有关规定\n
 　　1. 考生应按照准考证上规定的具体时间，在考试开始前30分钟抵达考场。\n
 　　2.考生须持报考须知中规定的有效证件、准考证、铅笔、签字笔、橡皮参加考试；允许考生携带一瓶透明的塑料瓶装白水；禁止携带和使用涂改液和涂改带；禁止携带手机等任何电子器件，如发现按为违规处理。\n

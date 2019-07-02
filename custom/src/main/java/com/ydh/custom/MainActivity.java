@@ -11,6 +11,7 @@ import com.ydh.custom.databinding.ActivityMainBinding;
 import com.ydh.custom.editor.FillActivity;
 import com.ydh.custom.keyboard.KeyboardActivity;
 import com.ydh.custom.loading.LoadActivity;
+import com.ydh.custom.spiner.SpinerActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
         // 自定义流式布局
         binding.button3.setOnClickListener(view -> startActivity(new Intent(this, LoadActivity.class)));
+
+        // 自定义下拉列表
+        binding.button4.setOnClickListener(view -> startActivity(new Intent(this, SpinerActivity.class)));
 
     }
 }

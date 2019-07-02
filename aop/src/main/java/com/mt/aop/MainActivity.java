@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button3).setOnClickListener(view -> log(2, 7, "log 打印"));
 
         findViewById(R.id.button5).setOnClickListener(new View.OnClickListener() {
-            //            @SingleClick(request = R.id.button5, timeout = 1000)
+//                        @SingleClick(request = R.id.button5, timeout = 1000)
             @Override
             public void onClick(View view) {
 //                log(4,5,"按钮5");
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, string + Thread.currentThread().toString(), Toast.LENGTH_LONG).show();
     }
 
-    @LogMethod(value = Log.ERROR,perform = false)
+    @LogMethod(value = Log.ERROR,perform = true)
     public int log(int a, int b, String str) {
         int c = a + b;
 
