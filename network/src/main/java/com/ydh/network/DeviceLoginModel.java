@@ -1,12 +1,6 @@
-package com.ydh.network.model;
+package com.ydh.network;
 
-/**
- * @author haru
- * @date 2017/9/14
- * 登录实体类
- */
-
-public class DeviceLoginModel {
+class DeviceLoginModel {
 
     /**
      * msg : 登录失败,设备未入库

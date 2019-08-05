@@ -34,6 +34,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import retrofit2.http.HTTP;
+
 import static com.ydh.okhttp.util.SendSoap.translate;
 
 /**
@@ -70,21 +72,34 @@ public class MainActivity extends AppCompatActivity {
 
         // 使用retrofit 请求
         binding.button3.setOnClickListener(view -> {
-            HashMap map = new HashMap();
-            map.put("deviceMac", "BO:F1:EC:32:95:9A");
+//            HashMap map = new HashMap();
+//            map.put("deviceMac", "BO:F1:EC:32:95:9A");
+//
+//            HttpHelper.obtain().post("user/login", map, new HttpCallback<DeviceLoginModel>() {
+//                @Override
+//                public void onFailure(String e) {
+//                    Log.e("zxy", "onFailure: " + e);
+//                }
+//
+//                @Override
+//                public void onSuccess(DeviceLoginModel beanPhoto) {
+//                    Log.e("zxy", "onSuccess: " + beanPhoto.toString());
+//                    Log.e("zxy", "线程名称: " + Thread.currentThread().getName());
+//                }
+//            });
 
-            HttpHelper.obtain().post("user/login", map, new HttpCallback<DeviceLoginModel>() {
-                @Override
-                public void onFailure(String e) {
-                    Log.e("zxy", "onFailure: " + e);
-                }
+            HttpHelper.obtain().get("http://www.babyzan.cn/newZanbaby/camera/getSn_token?user_id=16815&sn=360Q0559205",
+                    new HttpCallback<String>() {
+                        @Override
+                        public void onSuccess(String s) {
 
-                @Override
-                public void onSuccess(DeviceLoginModel beanPhoto) {
-                    Log.e("zxy", "onSuccess: " + beanPhoto.toString());
-                    Log.e("zxy", "线程名称: " + Thread.currentThread().getName());
-                }
-            });
+                        }
+
+                        @Override
+                        public void onFailure(String e) {
+
+                        }
+                    });
         });
 
         binding.okGetSey.setOnClickListener(view -> {
