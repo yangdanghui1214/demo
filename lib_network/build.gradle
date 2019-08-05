@@ -3,13 +3,11 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 28
 
-
-
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode getVersionCode()
+        versionName getVersionName()
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -26,6 +24,42 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+}
+
+static def getVersionCode() {
+    return 100001;
+}
+
+static def getVersionName() {
+    return "1.0.1";
+}
+
+def getVersion() {
+    return "release";
+}
+
+task reNameAAR(type: Copy) {
+    from 'build/outputs/aar'
+    into getVersion()
+    rename('lib_network-release.aar', 'network_' + getVersion() + '_' + getVersionName() + '.aar')
+}
+
+tasks.withType(JavaCompile) {
+    compileTask -> compileTask.dependsOn(reNameAAR)
 }
 
 dependencies {

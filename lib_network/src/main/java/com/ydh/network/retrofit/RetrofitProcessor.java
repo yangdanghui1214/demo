@@ -42,7 +42,11 @@ public class RetrofitProcessor implements IHttpProcessor {
 
     public static RetrofitProcessor getInstance() {
         if (api == null) {
-            api = getRetrofit().create(BaseApi.class);
+            synchronized (RetrofitProcessor.class) {
+                if (api == null) {
+                    api = getRetrofit().create(BaseApi.class);
+                }
+            }
         }
         return retrofitProcessor;
     }
@@ -94,8 +98,68 @@ public class RetrofitProcessor implements IHttpProcessor {
 
 
     @Override
+    public void post(String url, ICallback callbask) {
+        Observable<ResponseBody> observable = api.post(url);
+        observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<ResponseBody>() {
+
+                    @Override
+                    public void onNext(ResponseBody body) {
+                        String content = null;
+                        try {
+                            content = body.string();
+                            callbask.onSuccess(content);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            callbask.onFailure(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    protected void onError(AiThrowable e) {
+                        callbask.onFailure(e.getMessage());
+                    }
+                });
+    }
+
+    @Override
     public void post(String url, HashMap<String, String> params, ICallback callbask) {
         Observable<ResponseBody> observable = params == null ? api.post(url) : api.post(url, params);
+        observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<ResponseBody>() {
+
+                    @Override
+                    public void onNext(ResponseBody body) {
+                        String content = null;
+                        try {
+                            content = body.string();
+                            callbask.onSuccess(content);
+                            if (params != null) {
+                                params.clear();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            callbask.onFailure(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    protected void onError(AiThrowable e) {
+                        callbask.onFailure(e.getMessage());
+                        if (params != null) {
+                            params.clear();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void get(String url, ICallback callbask) {
+        Observable<ResponseBody> observable = api.get(url);
         observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -122,7 +186,7 @@ public class RetrofitProcessor implements IHttpProcessor {
 
     @Override
     public void get(String url, HashMap<String, String> params, ICallback callbask) {
-        Observable<ResponseBody> observable = params == null ? api.post(url) : api.post(url, params);
+        Observable<ResponseBody> observable = params == null ? api.get(url) : api.get(url, params);
         observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -130,13 +194,25 @@ public class RetrofitProcessor implements IHttpProcessor {
 
                     @Override
                     public void onNext(ResponseBody body) {
-                        String content = body.toString();
-                        callbask.onSuccess(content);
+                        String content = null;
+                        try {
+                            content = body.string();
+                            callbask.onSuccess(content);
+                            if (params != null) {
+                                params.clear();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            callbask.onFailure(e.getMessage());
+                        }
                     }
 
                     @Override
                     protected void onError(AiThrowable e) {
                         callbask.onFailure(e.getMessage());
+                        if (params != null) {
+                            params.clear();
+                        }
                     }
                 });
     }

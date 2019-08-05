@@ -41,8 +41,18 @@ public class HttpHelper implements IHttpProcessor {
     }
 
     @Override
+    public void post(String url, ICallback callbask) {
+        httpProcessor.post(url,  callbask);
+    }
+
+    @Override
     public void post(String url, HashMap<String, String> params, ICallback callbask) {
         httpProcessor.post(url, params, callbask);
+    }
+
+    @Override
+    public void get(String url, ICallback callbask) {
+        httpProcessor.get(url, callbask);
     }
 
     @Override

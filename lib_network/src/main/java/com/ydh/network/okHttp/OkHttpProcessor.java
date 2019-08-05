@@ -43,6 +43,11 @@ public class OkHttpProcessor implements IHttpProcessor {
     }
 
     @Override
+    public void post(String url, ICallback callbask) {
+
+    }
+
+    @Override
     public void post(String url, HashMap<String, String> params, final ICallback callbask) {
 
         RequestBody body = appendBody(params);
@@ -50,7 +55,32 @@ public class OkHttpProcessor implements IHttpProcessor {
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
-                .header("User-Agent", "a")
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbask.onFailure("接口访问失败");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String str = response.body().string();
+                    callbask.onSuccess(str);
+                } else {
+                    callbask.onFailure("接口访问失败");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void get(String url, ICallback callbask) {
+
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
                 .build();
 
         client.newCall(request).enqueue(new Callback() {

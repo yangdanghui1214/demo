@@ -5,6 +5,7 @@ import java.util.HashMap;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -25,8 +26,37 @@ public interface BaseApi {
      * @return
      */
     @GET()
-    Observable<ResponseBody> get(@Url String url);
+    Call<ResponseBody> getSync(@Url String url);
 
+    /**
+     * get 请求
+     *
+     * @param url  地址
+     * @param maps 入参
+     * @return
+     */
+    @GET()
+    Call<ResponseBody> getSync(@Url String url, @FieldMap HashMap<String, String> maps);
+
+    /**
+     * 表单请求
+     *
+     * @param url  地址
+     * @param maps 入参
+     * @return
+     */
+    @POST()
+    @FormUrlEncoded
+    Call<ResponseBody> postSync(@Url String url, @FieldMap HashMap<String, String> maps);
+
+    /**
+     * get 请求
+     *
+     * @param url 请求路径
+     * @return
+     */
+    @GET()
+    Observable<ResponseBody> get(@Url String url);
 
     /**
      * get 请求

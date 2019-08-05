@@ -1,7 +1,5 @@
 package com.ydh.network.retrofit;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ydh.network.call.ICallback;
@@ -12,7 +10,9 @@ import com.ydh.network.processor.IHttpProcessor;
 import com.ydh.network.retrofit.api.BaseApi;
 import com.ydh.network.retrofit.subscriber.BaseObserver;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -21,6 +21,7 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -33,16 +34,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitCustom implements IHttpProcessor {
 
     private static RetrofitCustom retrofitCustom = new RetrofitCustom();
-
-    /**
-     * 主机地址
-     */
-    private static String httpUrl = "";
-
-    /**
-     * 请求超时时间
-     */
-    private long requestTime = 10000;
 
     /**
      * 拦截器
@@ -62,7 +53,7 @@ public class RetrofitCustom implements IHttpProcessor {
      * @return 上下文
      */
     public static RetrofitCustom init(String url) {
-        httpUrl = url;
+        NetworkCommon.baseUrl = url;
         return retrofitCustom;
     }
 
@@ -71,7 +62,7 @@ public class RetrofitCustom implements IHttpProcessor {
      * @return 上下文
      */
     public RetrofitCustom requestTime(long time) {
-        requestTime = time;
+        NetworkCommon.connectTimeout = time;
         return retrofitCustom;
     }
 
@@ -123,6 +114,74 @@ public class RetrofitCustom implements IHttpProcessor {
     }
 
 
+    public String get(String url) {
+        String body = "";
+        try {
+            body = Objects.requireNonNull(baseApi.getSync(url).execute().body()).string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return body;
+    }
+
+    /**
+     * @param url    接口地址
+     * @param params 参数
+     */
+    public String get(String url, HashMap<String, String> params) {
+        String body = "";
+        Call<ResponseBody> call = params == null ? baseApi.getSync(url) : baseApi.getSync(url, params);
+        try {
+            body = Objects.requireNonNull(call.execute().body()).string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return body;
+    }
+
+    /**
+     * @param url    接口地址
+     * @param params 参数
+     */
+    public String post(String url, HashMap<String, String> params) {
+        String body = "";
+        Call<ResponseBody> call = baseApi.getSync(url, params);
+        try {
+            body = Objects.requireNonNull(call.execute().body()).string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return body;
+    }
+
+    @Override
+    public void post(String url, ICallback callbask) {
+        Observable<ResponseBody> observable = baseApi.post(url);
+        observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<ResponseBody>() {
+
+                    @Override
+                    public void onNext(ResponseBody body) {
+                        String content = null;
+                        try {
+                            content = body.string();
+                            callbask.onSuccess(content);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            callbask.onFailure(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    protected void onError(AiThrowable e) {
+                        callbask.onFailure(e.getMessage());
+                    }
+                });
+    }
+
+
     /**
      * @param url      接口地址
      * @param params   参数
@@ -131,16 +190,54 @@ public class RetrofitCustom implements IHttpProcessor {
     @Override
     public void post(String url, HashMap<String, String> params, ICallback callbask) {
         Observable<ResponseBody> observable = params == null ? baseApi.post(url) : baseApi.post(url, params);
-        observable
-//                .subscribeOn(Schedulers.io())
-//                .unsubscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
+        observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseObserver<ResponseBody>() {
 
                     @Override
                     public void onNext(ResponseBody body) {
-                        String content = body.toString();
-                        callbask.onSuccess(content);
+                        String content = null;
+                        try {
+                            content = body.string();
+                            callbask.onSuccess(content);
+                            if (params != null) {
+                                params.clear();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            callbask.onFailure(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    protected void onError(AiThrowable e) {
+                        callbask.onFailure(e.getMessage());
+                        if (params != null) {
+                            params.clear();
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void get(String url, ICallback callbask) {
+        Observable<ResponseBody> observable = baseApi.get(url);
+        observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<ResponseBody>() {
+
+                    @Override
+                    public void onNext(ResponseBody body) {
+                        String content = null;
+                        try {
+                            content = body.string();
+                            callbask.onSuccess(content);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            callbask.onFailure(e.getMessage());
+                        }
                     }
 
                     @Override
@@ -157,6 +254,35 @@ public class RetrofitCustom implements IHttpProcessor {
      */
     @Override
     public void get(String url, HashMap<String, String> params, ICallback callbask) {
+        Observable<ResponseBody> observable = params == null ? baseApi.get(url) : baseApi.get(url, params);
+        observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<ResponseBody>() {
 
+                    @Override
+                    public void onNext(ResponseBody body) {
+                        String content = null;
+                        try {
+                            content = body.string();
+                            callbask.onSuccess(content);
+                            if (params != null) {
+                                params.clear();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            callbask.onFailure(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    protected void onError(AiThrowable e) {
+                        callbask.onFailure(e.getMessage());
+                        if (params != null) {
+                            params.clear();
+                        }
+                    }
+                });
     }
+
 }
