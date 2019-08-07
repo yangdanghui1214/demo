@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/basice" />
             <option value="$PROJECT_DIR$/component" />
             <option value="$PROJECT_DIR$/custom" />
+            <option value="$PROJECT_DIR$/encryption" />
             <option value="$PROJECT_DIR$/eventbus" />
             <option value="$PROJECT_DIR$/info" />
             <option value="$PROJECT_DIR$/lib_aop" />
