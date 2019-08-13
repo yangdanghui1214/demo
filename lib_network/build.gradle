@@ -41,11 +41,11 @@ android {
 }
 
 static def getVersionCode() {
-    return 100001;
+    return 100002;
 }
 
 static def getVersionName() {
-    return "1.0.1";
+    return "1.0.2";
 }
 
 def getVersion() {

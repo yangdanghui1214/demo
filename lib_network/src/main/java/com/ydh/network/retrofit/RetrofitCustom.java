@@ -12,6 +12,8 @@ import com.ydh.network.retrofit.subscriber.BaseObserver;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +21,9 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Interceptor;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -114,7 +118,7 @@ public class RetrofitCustom implements IHttpProcessor {
     }
 
 
-    public String get(String url) {
+    public String getSync(String url) {
         String body = "";
         try {
             body = Objects.requireNonNull(baseApi.getSync(url).execute().body()).string();
@@ -128,7 +132,7 @@ public class RetrofitCustom implements IHttpProcessor {
      * @param url    接口地址
      * @param params 参数
      */
-    public String get(String url, HashMap<String, String> params) {
+    public String getSync(String url, HashMap<String, String> params) {
         String body = "";
         Call<ResponseBody> call = params == null ? baseApi.getSync(url) : baseApi.getSync(url, params);
         try {
@@ -143,9 +147,24 @@ public class RetrofitCustom implements IHttpProcessor {
      * @param url    接口地址
      * @param params 参数
      */
-    public String post(String url, HashMap<String, String> params) {
+    public String postSync(String url, HashMap<String, String> params) {
         String body = "";
-        Call<ResponseBody> call = baseApi.getSync(url, params);
+        Call<ResponseBody> call = baseApi.postSync(url, params);
+        try {
+            body = Objects.requireNonNull(call.execute().body()).string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return body;
+    }
+
+    /**
+     * @param url    接口地址
+     * @param params 参数
+     */
+    public String postBody(String url, HashMap<String, String> params) {
+        String body = "";
+        Call<ResponseBody> call = baseApi.postBody(url, getRequestBody(params));
         try {
             body = Objects.requireNonNull(call.execute().body()).string();
         } catch (IOException e) {
@@ -283,6 +302,29 @@ public class RetrofitCustom implements IHttpProcessor {
                         }
                     }
                 });
+    }
+
+    /**
+     * 将 map 转换为 RequestBody
+     * @param hashMap
+     * @return
+     */
+    public RequestBody getRequestBody(HashMap<String, String> hashMap) {
+        StringBuffer data = new StringBuffer();
+        if (hashMap != null && hashMap.size() > 0) {
+            Iterator iter = hashMap.entrySet().iterator();
+            while (iter.hasNext()) {
+                Map.Entry entry = (Map.Entry) iter.next();
+                Object key = entry.getKey();
+                Object val = entry.getValue();
+                data.append(key).append("=").append(val).append("&");
+            }
+        }
+        String jso = data.substring(0, data.length() - 1);
+        RequestBody requestBody =
+                RequestBody.create(MediaType.parse("application/x-www-form-urlencoded; charset=utf-8"),jso);
+
+        return requestBody;
     }
 
 }

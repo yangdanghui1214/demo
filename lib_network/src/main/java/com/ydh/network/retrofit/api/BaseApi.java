@@ -2,10 +2,11 @@ package com.ydh.network.retrofit.api;
 
 import java.util.HashMap;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -48,6 +49,15 @@ public interface BaseApi {
     @POST()
     @FormUrlEncoded
     Call<ResponseBody> postSync(@Url String url, @FieldMap HashMap<String, String> maps);
+
+    /**
+     * body 的传输数据
+     * @param url
+     * @param requestBody
+     * @return
+     */
+    @POST()
+    Call<ResponseBody> postBody( @Url String url,@Body RequestBody requestBody);
 
     /**
      * get 请求
