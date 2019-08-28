@@ -9,12 +9,20 @@ import java.util.HashMap;
  */
 public interface IHttpProcessor {
 
-    void post(String url, ICallback callbask);
+    void get(String url, ICallback callback);
 
-    void post(String url, HashMap<String, String> params, ICallback callbask);
+    void get(String url, HashMap<String, String> params, ICallback callback);
 
-    void get(String url, ICallback callbask);
+    void post(String url, ICallback callback);
 
-    void get(String url, HashMap<String, String> params, ICallback callbask);
+    void post(String url, HashMap<String, String> params, ICallback callback);
+
+    void put(String url, ICallback callback);
+
+    void put(String url, HashMap<String, String> params, ICallback callback);
+
+    void del(String url, ICallback callback);
+
+    void del(String url, HashMap<String, String> params, ICallback callback);
 
 }

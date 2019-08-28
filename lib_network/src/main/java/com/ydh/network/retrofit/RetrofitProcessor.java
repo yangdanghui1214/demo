@@ -98,6 +98,66 @@ public class RetrofitProcessor implements IHttpProcessor {
 
 
     @Override
+    public void get(String url, ICallback callbask) {
+        Observable<ResponseBody> observable = api.get(url);
+        observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<ResponseBody>() {
+
+                    @Override
+                    public void onNext(ResponseBody body) {
+                        String content = null;
+                        try {
+                            content = body.string();
+                            callbask.onSuccess(content);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            callbask.onFailure(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    protected void onError(AiThrowable e) {
+                        callbask.onFailure(e.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void get(String url, HashMap<String, String> params, ICallback callbask) {
+        Observable<ResponseBody> observable = params == null ? api.get(url) : api.get(url, params);
+        observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<ResponseBody>() {
+
+                    @Override
+                    public void onNext(ResponseBody body) {
+                        String content = null;
+                        try {
+                            content = body.string();
+                            callbask.onSuccess(content);
+                            if (params != null) {
+                                params.clear();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            callbask.onFailure(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    protected void onError(AiThrowable e) {
+                        callbask.onFailure(e.getMessage());
+                        if (params != null) {
+                            params.clear();
+                        }
+                    }
+                });
+    }
+
+    @Override
     public void post(String url, ICallback callbask) {
         Observable<ResponseBody> observable = api.post(url);
         observable.subscribeOn(Schedulers.io())
@@ -157,35 +217,19 @@ public class RetrofitProcessor implements IHttpProcessor {
                 });
     }
 
+    /**
+     * put 请求参数
+     *
+     * @param url
+     * @param callback
+     */
     @Override
-    public void get(String url, ICallback callbask) {
-        Observable<ResponseBody> observable = api.get(url);
-        observable.subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseObserver<ResponseBody>() {
-
-                    @Override
-                    public void onNext(ResponseBody body) {
-                        String content = null;
-                        try {
-                            content = body.string();
-                            callbask.onSuccess(content);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            callbask.onFailure(e.getMessage());
-                        }
-                    }
-
-                    @Override
-                    protected void onError(AiThrowable e) {
-                        callbask.onFailure(e.getMessage());
-                    }
-                });
+    public void put(String url, ICallback callback) {
+        put(url, null, callback);
     }
 
     @Override
-    public void get(String url, HashMap<String, String> params, ICallback callbask) {
+    public void put(String url, HashMap<String, String> params, ICallback callback) {
         Observable<ResponseBody> observable = params == null ? api.get(url) : api.get(url, params);
         observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
@@ -197,19 +241,63 @@ public class RetrofitProcessor implements IHttpProcessor {
                         String content = null;
                         try {
                             content = body.string();
-                            callbask.onSuccess(content);
+                            callback.onSuccess(content);
                             if (params != null) {
                                 params.clear();
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
-                            callbask.onFailure(e.getMessage());
+                            callback.onFailure(e.getMessage());
                         }
                     }
 
                     @Override
                     protected void onError(AiThrowable e) {
-                        callbask.onFailure(e.getMessage());
+                        callback.onFailure(e.getMessage());
+                        if (params != null) {
+                            params.clear();
+                        }
+                    }
+                });
+    }
+
+    /**
+     * del 的请求方式
+     *
+     * @param url
+     * @param callback
+     */
+    @Override
+    public void del(String url, ICallback callback) {
+        del(url, null, callback);
+    }
+
+    @Override
+    public void del(String url, HashMap<String, String> params, ICallback callback) {
+        Observable<ResponseBody> observable = params == null ? api.get(url) : api.get(url, params);
+        observable.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<ResponseBody>() {
+
+                    @Override
+                    public void onNext(ResponseBody body) {
+                        String content = null;
+                        try {
+                            content = body.string();
+                            callback.onSuccess(content);
+                            if (params != null) {
+                                params.clear();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            callback.onFailure(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    protected void onError(AiThrowable e) {
+                        callback.onFailure(e.getMessage());
                         if (params != null) {
                             params.clear();
                         }

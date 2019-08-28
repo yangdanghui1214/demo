@@ -1,21 +1,19 @@
 package com.ydh.network.okHttp;
 
 import com.ydh.network.call.ICallback;
+import com.ydh.network.call.TsCallback;
 import com.ydh.network.common.NetworkCommon;
 import com.ydh.network.processor.IHttpProcessor;
+import com.ydh.network.util.ParameterUtil;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 
 /**
  * okhttp
@@ -42,68 +40,107 @@ public class OkHttpProcessor implements IHttpProcessor {
         return okHttpProcessor;
     }
 
+    /**
+     * get 请求
+     *
+     * @param url
+     * @param callback
+     */
     @Override
-    public void post(String url, ICallback callbask) {
-
-    }
-
-    @Override
-    public void post(String url, HashMap<String, String> params, final ICallback callbask) {
-
-        RequestBody body = appendBody(params);
+    public void get(String url, ICallback callback) {
 
         Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                callbask.onFailure("接口访问失败");
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String str = response.body().string();
-                    callbask.onSuccess(str);
-                } else {
-                    callbask.onFailure("接口访问失败");
-                }
-            }
-        });
-    }
-
-    @Override
-    public void get(String url, ICallback callbask) {
-
-        Request request = new Request.Builder()
-                .url(url)
+                .url(NetworkCommon.baseUrl + url)
                 .get()
                 .build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                callbask.onFailure("接口访问失败");
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String str = response.body().string();
-                    callbask.onSuccess(str);
-                } else {
-                    callbask.onFailure("接口访问失败");
-                }
-            }
-        });
+        client.newCall(request).enqueue(new TsCallback(callback));
     }
 
     @Override
-    public void get(String url, HashMap<String, String> params, ICallback callnack) {
+    public void get(String url, HashMap<String, String> params, ICallback callback) {
+        Request request = new Request.Builder()
+                .url(NetworkCommon.baseUrl + url + ParameterUtil.getParams(params))
+                .get()
+                .build();
 
+        client.newCall(request).enqueue(new TsCallback(callback));
+    }
+
+    /**
+     * post 请求
+     *
+     * @param url
+     * @param callback
+     */
+    @Override
+    public void post(String url, ICallback callback) {
+        RequestBody body = appendBody(null);
+
+        Request request = new Request.Builder()
+                .url(NetworkCommon.baseUrl + url)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new TsCallback(callback));
+    }
+
+    @Override
+    public void post(String url, HashMap<String, String> params, final ICallback callback) {
+        RequestBody body = appendBody(params);
+
+        Request request = new Request.Builder()
+                .url(NetworkCommon.baseUrl + url)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new TsCallback(callback));
+    }
+
+    /**
+     * put 请求
+     *
+     * @param url
+     * @param callback
+     */
+    @Override
+    public void put(String url, ICallback callback) {
+        put(url, null, callback);
+    }
+
+    @Override
+    public void put(String url, HashMap<String, String> params, ICallback callback) {
+        RequestBody body = appendBody(params);
+
+        Request request = new Request.Builder()
+                .url(NetworkCommon.baseUrl + url)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new TsCallback(callback));
+    }
+
+    /**
+     * del 请求
+     *
+     * @param url
+     * @param callback
+     */
+    @Override
+    public void del(String url, ICallback callback) {
+        del(url, null, callback);
+    }
+
+    @Override
+    public void del(String url, HashMap<String, String> params, ICallback callback) {
+        RequestBody body = appendBody(params);
+
+        Request request = new Request.Builder()
+                .url(NetworkCommon.baseUrl + url)
+                .delete(body)
+                .build();
+
+        client.newCall(request).enqueue(new TsCallback(callback));
     }
 
     /**
@@ -121,7 +158,7 @@ public class OkHttpProcessor implements IHttpProcessor {
         }
 
         for (Map.Entry<String, String> entry : map.entrySet()) {
-            body.add(entry.getKey(), entry.getValue() );
+            body.add(entry.getKey(), entry.getValue());
         }
 
         return body.build();

@@ -41,16 +41,6 @@ public class HttpHelper implements IHttpProcessor {
     }
 
     @Override
-    public void post(String url, ICallback callbask) {
-        httpProcessor.post(url,  callbask);
-    }
-
-    @Override
-    public void post(String url, HashMap<String, String> params, ICallback callbask) {
-        httpProcessor.post(url, params, callbask);
-    }
-
-    @Override
     public void get(String url, ICallback callbask) {
         httpProcessor.get(url, callbask);
     }
@@ -58,5 +48,47 @@ public class HttpHelper implements IHttpProcessor {
     @Override
     public void get(String url, HashMap<String, String> params, ICallback callnack) {
         httpProcessor.get(url, params, callnack);
+    }
+
+    @Override
+    public void post(String url, ICallback callbask) {
+        httpProcessor.post(url, callbask);
+    }
+
+    @Override
+    public void post(String url, HashMap<String, String> params, ICallback callbask) {
+        httpProcessor.post(url, params, callbask);
+    }
+
+    /**
+     * put 请求
+     *
+     * @param url
+     * @param callback
+     */
+    @Override
+    public void put(String url, ICallback callback) {
+        httpProcessor.put(url, callback);
+    }
+
+    @Override
+    public void put(String url, HashMap<String, String> params, ICallback callback) {
+        httpProcessor.put(url, params, callback);
+    }
+
+    /**
+     * del 请求
+     *
+     * @param url
+     * @param callback
+     */
+    @Override
+    public void del(String url, ICallback callback) {
+        httpProcessor.del(url, callback);
+    }
+
+    @Override
+    public void del(String url, HashMap<String, String> params, ICallback callback) {
+        httpProcessor.del(url, params, callback);
     }
 }
