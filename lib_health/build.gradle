@@ -1,0 +1,76 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode getVersionCode()
+        versionName getVersionName()
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+}
+
+static def getVersionCode() {
+    return 100000;
+}
+
+static def getVersionName() {
+    return "1.0.0";
+}
+
+def getVersion() {
+    return "release";
+}
+
+task reNameAAR(type: Copy) {
+    from 'build/outputs/aar'
+    into getVersion()
+    rename('lib_health-release.aar', 'health_' + getVersion() + '_' + getVersionName() + '.aar')
+}
+
+tasks.withType(JavaCompile) {
+    compileTask -> compileTask.dependsOn(reNameAAR)
+}
+
+dependencies {
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+
+    implementation(name: 'liteorm_release_1.0.0', ext: 'aar')
+
+}
