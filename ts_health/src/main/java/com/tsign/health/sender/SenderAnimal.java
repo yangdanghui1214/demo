@@ -90,6 +90,7 @@ public class SenderAnimal {
                     try {
                         if (WAIT_TIME > 0) {
                             lock.wait(WAIT_TIME * 1000);
+                            hasAttend = true;
                         } else {
                             lock.wait();
                         }
