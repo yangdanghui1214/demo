@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.tsign.percent.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#33000000"
+    android:orientation="vertical">
+
+    <!--标题-->
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|bottom"
+        android:includeFontPadding="false"
+        android:textColor="@color/white"
+        app:layout_heightPercent="47%h"
+        app:layout_textSizePercent="25%h"
+        tools:text="软件升级" />
+
+    <!--apk下载进度-->
+    <com.tsign.percent.PercentLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_paddingLeftPercent="30%h"
+        app:layout_paddingRightPercent="30%h">
+
+        <ProgressBar
+            android:id="@+id/pb_download_apk"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:progressDrawable="@drawable/break_list_progress"
+            app:layout_heightPercent="28%h"
+            app:layout_marginTopPercent="5%h"
+            app:layout_paddingRightPercent="40%h" />
+
+        <TextView
+            android:id="@+id/tv_download_apk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:includeFontPadding="true"
+            android:textColor="#b4deff"
+            app:layout_textSizePercent="42%"
+            tools:text="30%" />
+
+    </com.tsign.percent.PercentLinearLayout>
+</com.tsign.percent.PercentLinearLayout>
